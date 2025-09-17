@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\TaskController;
 use Illuminate\Support\Facades\Route;
 
@@ -26,6 +27,15 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/tasks/bulk', [TaskController::class,'bulk'])->name('tasks.bulk');
     // routes/web.php（authグループ内など）
     Route::patch('/tasks/reorder', [TaskController::class, 'reorder'])->name('tasks.reorder');
+});
+
+// routes/web.php
+
+Route::middleware(['auth:sanctum'])->group(function () {
+    Route::get('/projects', [ProjectController::class,'index'])->name('projects.index');   // JSON
+    Route::post('/projects', [ProjectController::class,'store'])->name('projects.store');  // JSON
+    Route::put('/projects/{project}', [ProjectController::class,'update'])->name('projects.update'); // JSON
+    Route::delete('/projects/{project}', [ProjectController::class,'destroy'])->name('projects.destroy'); // JSON
 });
 
 require __DIR__ . '/auth.php';
